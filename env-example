@@ -56,3 +56,6 @@ NGINX_PHP_UPSTREAM_PORT=9000
 NGINX_SSL_PATH=./nginx/ssl/
 NGINX_VHOST_PATH=./nginx/vhost/
 NGINX_HOST_LOG_PATH=./logs/nginx/
+
+### MEMCACHED #############################################
+MEMCACHED_HOST_PORT=1121
