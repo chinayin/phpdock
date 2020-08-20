@@ -72,7 +72,20 @@ services:
       - ${DATA_PATH_HOST}/memcached:/var/lib/memcached
     ports:
       - "${MEMCACHED_HOST_PORT}:11211"
-    depends_on:
-      - php-fpm
     networks:
       - backend
+
+  ### Redis ################################################
+  redis:
+    build:
+      context: ./redis
+      args:
+        - TIMEZONE=${TIMEZONE}
+    volumes:
+      - ${DATA_PATH_HOST}/redis:/data
+    ports:
+      - "${REDIS_HOST_PORT}:6379"
+    networks:
+      - backend
+    sysctls:
+      net.core.somaxconn: 1024
