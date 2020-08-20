@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [php-fpm, nginx]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        env:
+          PHP_VERSION: ${{ matrix.php_version }}
+        run: |
+          cp env-example .env
+          docker-compose build
