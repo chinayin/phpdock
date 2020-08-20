@@ -15,8 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        env:
-          PHP_VERSION: ${{ matrix.php_version }}
         run: |
           cp env-example .env
           docker-compose build
