@@ -81,7 +81,7 @@ elif [ "$1" == "down" ]; then
 
 elif [ "$1" == "web" ]; then
   print_style "Initializing Docker Compose for services [ nginx, php-fpm ]\n" "info"
-  ./dock.sh up nginx php-fpm
+  ./dock.sh up nginx
 
 elif [ "$1" == "bash" ]; then
   docker-compose exec php-fpm bash
