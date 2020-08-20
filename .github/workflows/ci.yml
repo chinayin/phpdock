@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [php-fpm, nginx]
+        service: [all]
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
