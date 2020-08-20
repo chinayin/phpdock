@@ -8,8 +8,7 @@ RUN set -x  \
     ;fi \
     && apk update && apk upgrade \
     && apk add --no-cache --virtual .build-deps tzdata \
-    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
-    && echo "${TIMEZONE}" > /etc/timezone \
+    && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo "${TIMEZONE}" > /etc/timezone \
     && apk del .build-deps
 USER memcache
 EXPOSE 11211
