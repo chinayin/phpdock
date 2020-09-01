@@ -79,3 +79,9 @@ MYSQL_ROOT_PASSWORD=root
 MYSQL_USER=phpdock
 MYSQL_PASSWORD=phpdock
 MYSQL_DATABASE=default
+
+### ELK ##################################################
+ELK_VERSION=7.9.0
+### ELASTICSEARCH #########################################
+ELASTICSEARCH_HOST_HTTP_PORT=9200
+ELASTICSEARCH_HOST_TRANSPORT_PORT=9300

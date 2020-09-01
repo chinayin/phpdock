@@ -13,6 +13,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   mysql:
     driver: ${VOLUMES_DRIVER}
+  elasticsearch:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -142,5 +144,35 @@ services:
     hostname: phpdock-mysql
     ports:
       - "${MYSQL_HOST_PORT}:3306"
+    networks:
+      - backend
+
+
+  ### ElasticSearch ########################################
+  elasticsearch:
+    build:
+      context: ./elasticsearch
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - ELK_VERSION=${ELK_VERSION}
+    environment:
+      - cluster.name=phpdock-cluster
+      - node.name=phpdock-node
+      - cluster.initial_master_nodes=phpdock-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "${ELASTICSEARCH_HOST_HTTP_PORT}:9200"
+      - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
     networks:
       - backend
