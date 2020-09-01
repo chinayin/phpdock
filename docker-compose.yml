@@ -15,6 +15,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   elasticsearch:
     driver: ${VOLUMES_DRIVER}
+  mongo:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -147,6 +149,21 @@ services:
     networks:
       - backend
 
+  ### MongoDB ##############################################
+  mongo:
+    build:
+      context: ./mongo
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+    hostname: phpdock-mongo
+    ports:
+      - "${MONGODB_HOST_PORT}:27017"
+    volumes:
+      - ${DATA_PATH_HOST}/mongo:/data/db
+      - ${DATA_PATH_HOST}/mongo_config:/data/configdb
+    networks:
+      - backend
 
   ### ElasticSearch ########################################
   elasticsearch:

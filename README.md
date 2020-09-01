@@ -61,6 +61,8 @@ Available options:
 - redis
 - memcached
 - mysql
+- mongo
+- elasticsearch
 
 <a name="what-is-docker"></a>
 ### Docker 是什么?

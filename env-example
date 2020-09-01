@@ -80,6 +80,9 @@ MYSQL_USER=phpdock
 MYSQL_PASSWORD=phpdock
 MYSQL_DATABASE=default
 
+### MONGODB ###############################################
+MONGODB_HOST_PORT=27017
+
 ### ELK ##################################################
 ELK_VERSION=7.9.0
 ### ELASTICSEARCH #########################################
