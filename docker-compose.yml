@@ -63,6 +63,19 @@ services:
     networks:
       - backend
 
+  ### Portainer ################################################
+  portainer:
+    build:
+      context: ./portainer
+    volumes:
+      - ${DATA_PATH_HOST}/portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    hostname: phpdock-portainer
+    ports:
+      - "${PORTAINER_WEB_PORT}:9000"
+    networks:
+      - backend
+
   ### Memcached ############################################
   memcached:
     build:
@@ -111,15 +124,23 @@ services:
     depends_on:
       - redis
 
-  ### Portainer ################################################
-  portainer:
+  ### MySQL ################################################
+  mysql:
     build:
-      context: ./portainer
+      context: ./mysql
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - MYSQL_VERSION=${MYSQL_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ${DATA_PATH_HOST}/portainer_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    hostname: phpdock-portainer
+      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+    hostname: phpdock-mysql
     ports:
-      - "${PORTAINER_WEB_PORT}:9000"
+      - "${MYSQL_HOST_PORT}:3306"
     networks:
       - backend
