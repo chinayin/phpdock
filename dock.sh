@@ -84,7 +84,7 @@ elif [ "$1" == "web" ]; then
   ./dock.sh up nginx
 
 elif [ "$1" == "bash" ]; then
-  docker-compose exec php-fpm bash
+  docker-compose exec php-cli bash
 
 elif [ "$1" == "install" ]; then
   print_style "Installing docker-compose\n" "info"

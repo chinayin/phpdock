@@ -67,6 +67,26 @@ services:
     networks:
       - backend
 
+  ### php-cli ########################################
+  php-cli:
+    build:
+      context: ./php-cli
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - PHP_VERSION=${PHP_VERSION}
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./php-cli/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    hostname: phpdock-php-cli
+    networks:
+      - backend
+
   ### Portainer ################################################
   portainer:
     build:
@@ -174,11 +194,12 @@ services:
         - TIMEZONE=${TIMEZONE}
         - ELK_VERSION=${ELK_VERSION}
     environment:
-      - cluster.name=phpdock-cluster
-      - node.name=phpdock-node
-      - cluster.initial_master_nodes=phpdock-node
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+      cluster.name: phpdock-cluster
+      node.name: phpdock-node
+      cluster.initial_master_nodes: phpdock-node
+      discovery.type: single-node
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS": "-Xms128m -Xmx128m"
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
     ulimits:
@@ -193,3 +214,8 @@ services:
       - "${ELASTICSEARCH_HOST_TRANSPORT_PORT}:9300"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

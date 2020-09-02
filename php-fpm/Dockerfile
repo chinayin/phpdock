@@ -9,3 +9,4 @@ RUN set -eux \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www
+CMD ["php", "-a"]
