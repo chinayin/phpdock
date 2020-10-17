@@ -10,6 +10,7 @@ RUN set -x  \
     && apk update && apk upgrade \
     && apk --update add logrotate \
     && apk add --no-cache openssl bash curl \
+    && apk add --no-cache busybox-extras \
     ## Create 'messages' file used from 'logrotate'
     && touch /var/log/messages
 
