@@ -220,3 +220,19 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
+
+  ### node ########################################
+  node:
+    build:
+      context: ./node
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - NODE_VERSION=${NODE_VERSION}
+    hostname: phpdock-node
+    ports:
+      - "${NODE_HOST_PORT}:3000"
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    networks:
+      - frontend
