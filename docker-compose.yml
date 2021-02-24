@@ -229,10 +229,31 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - TIMEZONE=${TIMEZONE}
         - NODE_VERSION=${NODE_VERSION}
+    #    command: ["pm2", "start", "/app/pm2.json"]
+    command: ["pm2-runtime", "start", "pm2.json"]
     hostname: phpdock-node
     ports:
       - "${NODE_HOST_PORT}:3000"
     volumes:
-      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - /Users/tian/2020/docker/phpdock/www/pm2:/app
+    #      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    networks:
+      - frontend
+
+  ### java ########################################
+  java:
+    build:
+      context: ./java
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - JAVA_VERSION=${JAVA_VERSION}
+#    command: ["pm2-runtime", "start", "pm2.json"]
+    hostname: phpdock-java
+#    ports:
+#      - "${NODE_HOST_PORT}:3000"
+    volumes:
+      - /Users/tian/2020/github/alibaba/canal:/app
+    #      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
     networks:
       - frontend

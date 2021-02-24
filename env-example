@@ -92,3 +92,6 @@ ELASTICSEARCH_HOST_TRANSPORT_PORT=9300
 ### NODE #########################################
 NODE_VERSION=12
 NODE_HOST_PORT=3000
+
+### JAVA #########################################
+JAVA_VERSION=8
