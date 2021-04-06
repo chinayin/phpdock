@@ -22,7 +22,11 @@ COPY nginx.conf /etc/nginx/
 # Set upstream conf and remove the default conf
 ARG PHP_UPSTREAM_CONTAINER=php-fpm
 ARG PHP_UPSTREAM_PORT=9000
-RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
+ARG PHP72_UPSTREAM_CONTAINER=php-fpm72
+ARG PHP72_UPSTREAM_PORT=9002
+RUN set -x  \
+    && echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" >> /etc/nginx/conf.d/upstream.conf \
+    && echo "upstream php72-upstream { server ${PHP72_UPSTREAM_CONTAINER}:${PHP72_UPSTREAM_PORT}; }" >> /etc/nginx/conf.d/upstream.conf \
     && rm /etc/nginx/conf.d/default.conf \
     && mkdir /etc/nginx/vhost
 

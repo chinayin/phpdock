@@ -26,17 +26,20 @@ phpdock 努力简化创建开发环境过程。
 
 **使用dock.sh简化操作：**
 ```bash
-./dock.sh
+./dock
 
 Available options:
-   web	                 Starts docker-sync and runs docker compose for web services.
-   up [services]	 Starts docker-sync and runs docker compose.
-   stop			 Stops containers and docker-sync.
-   down			 Stop and remove containers, networks, images, and volumes and docker-sync.
-   bash			 Opens bash on the workspace with user.
-   install		 Installs docker-sync and docker-compose gem on the host machine.
-   sync			 Manually triggers the synchronization of files.
-   clean		 Removes all files from docker-sync.
+   web   Starts docker-sync and runs docker compose for web services.
+   up [services]         Starts docker-sync and runs docker compose.
+   stop                  Stops containers and docker-sync.
+   build [services]      Build docker compose.
+   down                  Stop and remove containers, networks, images, and volumes and docker-sync.
+   cli                   Opens bash on the php-cli with user.
+   cli72                 Opens bash on the php-cli72 with user.
+   install               Installs docker-sync and docker-compose gem on the host machine.
+   sync                  Manually triggers the synchronization of files.
+   clean                 Removes all files from docker-sync.
+
 ```
 
 <a name="features"></a>

@@ -1,11 +1,6 @@
 ARG PHP_VERSION=7.2
-FROM chinayin/php-fpm:${PHP_VERSION}
+FROM chinayin/php:${PHP_VERSION}-fpm-slim
 
 COPY ./php-fpm.ini /usr/local/etc/php/conf.d
-
-RUN set -eux \
-    && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www

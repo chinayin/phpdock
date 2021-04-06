@@ -43,6 +43,7 @@ services:
       - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
+      - php-fpm72
     networks:
       - frontend
       - backend
@@ -68,6 +69,26 @@ services:
     networks:
       - backend
 
+  php-fpm72:
+    build:
+      context: ./php-fpm
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - PHP_VERSION=7.2
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    volumes:
+      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm/php-fpm-conf.ini:/usr/local/etc/php-fpm.d/zz-docker.conf
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    hostname: phpdock-php-fpm
+    expose:
+      - "9002"
+    networks:
+      - backend
+
   ### php-cli ########################################
   php-cli:
     build:
@@ -76,6 +97,25 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - TIMEZONE=${TIMEZONE}
         - PHP_VERSION=${PHP_VERSION}
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./php-cli/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    hostname: phpdock-php-cli
+    networks:
+      - backend
+
+  php-cli72:
+    build:
+      context: ./php-cli
+      args:
+        - CHANGE_SOURCE=${CHANGE_SOURCE}
+        - TIMEZONE=${TIMEZONE}
+        - PHP_VERSION=7.2
         - http_proxy
         - https_proxy
         - no_proxy
@@ -216,7 +256,7 @@ services:
     networks:
       - backend
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
       interval: 10s
       timeout: 10s
       retries: 3
@@ -230,7 +270,7 @@ services:
         - TIMEZONE=${TIMEZONE}
         - NODE_VERSION=${NODE_VERSION}
     #    command: ["pm2", "start", "/app/pm2.json"]
-    command: ["pm2-runtime", "start", "pm2.json"]
+    command: [ "pm2-runtime", "start", "pm2.json" ]
     hostname: phpdock-node
     ports:
       - "${NODE_HOST_PORT}:3000"
@@ -248,10 +288,10 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - TIMEZONE=${TIMEZONE}
         - JAVA_VERSION=${JAVA_VERSION}
-#    command: ["pm2-runtime", "start", "pm2.json"]
+    #    command: ["pm2-runtime", "start", "pm2.json"]
     hostname: phpdock-java
-#    ports:
-#      - "${NODE_HOST_PORT}:3000"
+    #    ports:
+    #      - "${NODE_HOST_PORT}:3000"
     volumes:
       - /Users/tian/2020/github/alibaba/canal:/app
     #      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}

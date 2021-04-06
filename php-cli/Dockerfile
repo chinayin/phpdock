@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM chinayin/php-cli:${PHP_VERSION}
+FROM chinayin/php:${PHP_VERSION}-cli-slim
 
 COPY ./aliases.sh /root/aliases.sh
 
