@@ -1,22 +1,12 @@
-FROM nginx:alpine
+FROM chinayin/nginx:1.19
 
-ARG CHANGE_SOURCE=true
-ARG TIMEZONE=Asia/Shanghai
-RUN if [ ${CHANGE_SOURCE} = true ]; then \
-    sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/' /etc/apk/repositories \
-;fi && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo "${TIMEZONE}" > /etc/timezone;
-
-RUN set -x  \
-    && apk update && apk upgrade \
-    && apk --update add logrotate \
-    && apk add --no-cache openssl bash curl \
-    && apk add --no-cache busybox-extras \
+RUN set -eux \
+    ## install packages
+    && install_packages logrotate openssl bash curl \
     ## Create 'messages' file used from 'logrotate'
     && touch /var/log/messages
 
-# Copy 'logrotate' config file
 COPY logrotate/nginx /etc/logrotate.d/
-
 COPY nginx.conf /etc/nginx/
 
 # Set upstream conf and remove the default conf
