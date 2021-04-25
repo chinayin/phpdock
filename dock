@@ -5,12 +5,12 @@ set -eu
 # the installation and usage of phpdock with docker-sync.
 
 # To run, make sure to add permissions to this file:
-# chmod 755 dock.sh
+# chmod 755 dock
 
 # USAGE EXAMPLE:
-# Install docker-compose and docker-sync: ./dock.sh install
-# Start sync and services with nginx and phpfpm: ./dock.sh up nginx php-fpm
-# Stop containers and sync: ./dock.sh stop
+# Install docker-compose and docker-sync: ./dock install
+# Start sync and services with nginx and phpfpm: ./dock up nginx php-fpm
+# Stop containers and sync: ./dock stop
 
 # prints colored text
 print_style() {
@@ -97,7 +97,7 @@ elif [ "$1" == "down" ]; then
 
 elif [ "$1" == "web" ]; then
   print_style "Initializing Docker Compose for services [ nginx, php-fpm ]\n" "info"
-  ./dock.sh up nginx
+  ./dock up nginx
 
 elif [ "$1" == "cli" ]; then
   docker-compose exec php-cli bash
