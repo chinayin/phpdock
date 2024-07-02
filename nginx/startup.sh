@@ -7,7 +7,7 @@ if [ ! -f /etc/nginx/ssl/default.crt ]; then
 fi
 
 # Start crond in background
-crond -l 2 -b
+#crond -l 2 -b
 
 # Start nginx in foreground
 nginx

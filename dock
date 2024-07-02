@@ -50,9 +50,6 @@ display_options() {
   print_style "   cli" "success"
   printf "\t\t\t Opens bash on the php-cli with user.\n"
 
-  print_style "   cli72" "success"
-  printf "\t\t Opens bash on the php-cli72 with user.\n"
-
   print_style "   install" "info"
   printf "\t\t Installs docker-sync and docker-compose gem on the host machine.\n"
 
@@ -101,9 +98,6 @@ elif [ "$1" == "web" ]; then
 
 elif [ "$1" == "cli" ]; then
   docker-compose exec php-cli bash
-
-elif [ "$1" == "cli72" ]; then
-  docker-compose exec php-cli72 bash
 
 elif [ "$1" == "install" ]; then
   print_style "Installing docker-compose\n" "info"

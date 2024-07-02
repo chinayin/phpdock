@@ -1,0 +1,4 @@
+ARG NODE_VERSION
+FROM chinayin/node:${NODE_VERSION}-slim
+
+EXPOSE 3000
