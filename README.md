@@ -15,7 +15,7 @@ phpdock 努力简化创建开发环境过程。
 
 2. 进入目录
     ```bash
-    cp env-example .env
+    cp .env.example .env
     ```
 
 3. 运行这些容器。

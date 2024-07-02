@@ -160,6 +160,7 @@ services:
       context: ./redis
       args:
         - TIMEZONE=${TIMEZONE}
+    command: --requirepass ${REDIS_PASSWORD}
     volumes:
       - ${DATA_PATH_HOST}/redis:/data
     hostname: phpdock-redis
@@ -179,6 +180,7 @@ services:
       - ADMIN_PASS=${REDIS_WEBUI_PASSWORD}
       - REDIS_1_HOST=${REDIS_WEBUI_CONNECT_HOST}
       - REDIS_1_PORT=${REDIS_WEBUI_CONNECT_PORT}
+      - REDIS_1_AUTH=${REDIS_PASSWORD}
     hostname: phpdock-redis-webui
     ports:
       - "${REDIS_WEBUI_PORT}:80"

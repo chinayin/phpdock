@@ -13,7 +13,7 @@ phpdock aims to simplify the process of creating a development environment.
 
 2. Enter the directory:
     ```bash
-    cp env-example .env
+    cp .env.example .env
     ```
 
 3. Run these containers:
